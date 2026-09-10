@@ -1,4 +1,4 @@
 # smthn
 
-hi
-nigga respond 
+x.txt check and give correct answer
+
