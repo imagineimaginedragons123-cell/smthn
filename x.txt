@@ -1,82 +1,83 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
 
-  <groupId>SELABINTERNAL1</groupId>
-  <artifactId>SportsTournamentManagementSystem</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>war</packaging>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-  <name>StudentCourseManagementSystem Maven Webapp</name>
-  <url>http://www.example.com</url>
+    <modelVersion>4.0.0</modelVersion>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
-  </properties>
+    <groupId>SELABINTERNAL1</groupId>
+    <artifactId>SportsTournamentManagementSystem</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>war</packaging>
 
-  <dependencies>
-    <!-- Dependency Block A: Core Web Application API -->
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>
-      <version>4.0.1</version>
-      <scope>provided</scope>
-    </dependency>
+    <name>StudentCourseManagementSystem Maven Webapp</name>
+    <url>http://www.example.com</url>
 
-    <!-- Dependency Block B: Database Connectivity -->
-    <dependency>
-      <groupId>mysql-db</groupId>
-      <artifactId>mysql-connector</artifactId>
-      <version>8.0.33</version>
-    </dependency>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+    </properties>
 
-    <!-- Dependency Block C: Unit Testing -->
-    <dependency>
-      <groupId>junit</groupId>
-  	   <artifactId>junit</artifactId>
-      <version>4.13.2</version>
-      <scope>test</scope>
-    </dependency>
+    <dependencies>
 
-    <!-- Dependency Block D: Offline Vendor Library -->
-    <dependency>
-      <groupId>com.sports</groupId>
-      <artifactId>sports-analytics</artifactId>
-      <version>1.0.0</version>
-    </dependency>
-  </dependencies>
+        <!-- Servlet API -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+            <scope>provided</scope>
+        </dependency>
 
-  <build>
-    <!-- Notice the name provided here -->
-    <finalName>StudentCourseManagementSystem</finalName>
-    
-    <pluginManagement>
-      <plugins>
-        <!-- Standard Maven Plugins... -->
-        <plugin>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.13.0</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-war-plugin</artifactId>
-          <version>3.4.0</version>
-        </plugin>
-      </plugins>
-    </pluginManagement>
+        <!-- MySQL -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>8.0.33</version>
+        </dependency>
 
-    <plugins>
-      <!-- Plugin Block E: Embedded Tomcat Server -->
-      <plugin>
-        <artifactId>tomcat7-maven-plugin</artifactId>
-        <version>2.2</version>
-        <configuration>
-          <port>8080</port>
-          <path>/SportsTournament</path>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+        <!-- JUnit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Sports Analytics -->
+        <dependency>
+            <groupId>com.sports</groupId>
+            <artifactId>sports-analytics</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+
+        <finalName>StudentCourseManagementSystem</finalName>
+
+        <pluginManagement>
+            <plugins>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.13.0</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>3.4.0</version>
+                </plugin>
+
+            </plugins>
+        </pluginManagement>
+
+    </build>
+
 </project>
