@@ -1,0 +1,1372 @@
+============================================================
+SOFTWARE ENGINEERING LAB INTERNAL I
+SPORTS MANAGEMENT SYSTEM — COMPLETE ANSWERS
+============================================================
+
+REPOSITORY:
+https://github.com/sarasrija/SportManagementSystem.git
+
+
+============================================================
+PART I — GIT & GITHUB COLLABORATION
+============================================================
+
+
+Q1. Set up the codebase on the local machine.
+------------------------------------------------------------
+
+git clone https://github.com/sarasrija/SportManagementSystem.git
+
+cd SportManagementSystem
+
+
+============================================================
+
+Q2. Verify remote server connections for fetching/pushing.
+------------------------------------------------------------
+
+git remote -v
+
+
+Expected output format:
+
+origin  https://github.com/sarasrija/SportManagementSystem.git (fetch)
+origin  https://github.com/sarasrija/SportManagementSystem.git (push)
+
+
+============================================================
+
+Q3. Check staged, unstaged and untracked changes.
+------------------------------------------------------------
+
+git status
+
+To see exact unstaged changes:
+
+git diff
+
+
+============================================================
+
+Q4. Create and switch to feature/player-registration.
+------------------------------------------------------------
+
+git switch -c feature/player-registration
+
+Alternative older command:
+
+git checkout -b feature/player-registration
+
+
+============================================================
+
+Q5. Display all local and remote branches and identify
+    the currently active branch.
+------------------------------------------------------------
+
+git branch -a
+
+To show only the current branch:
+
+git branch --show-current
+
+To display local branches:
+
+git branch
+
+The current branch is marked with *
+
+
+============================================================
+
+Q6. Add RegistrationServlet.java and commit it.
+------------------------------------------------------------
+
+git add src/main/java/com/sports/servlet/RegistrationServlet.java
+
+git commit -m "Add player registration servlet"
+
+
+============================================================
+
+Q7. Add web.xml to the previous commit without changing
+    the original commit message.
+------------------------------------------------------------
+
+git add src/main/webapp/WEB-INF/web.xml
+
+git commit --amend --no-edit
+
+--no-edit keeps the existing commit message.
+
+
+============================================================
+
+Q8. Retrieve remote updates without modifying local files.
+------------------------------------------------------------
+
+git fetch origin
+
+FETCH downloads remote updates but does not merge them
+into the current working branch.
+
+
+============================================================
+
+Q9. Incorporate the latest remote main branch updates
+    into the currently active branch.
+------------------------------------------------------------
+
+git fetch origin
+
+git merge origin/main
+
+
+============================================================
+
+Q10. Reorder feature branch history so that it starts
+     from the latest main branch.
+------------------------------------------------------------
+
+git fetch origin
+
+git rebase origin/main
+
+
+============================================================
+
+Q11. Cancel a rebase and return to the previous state.
+------------------------------------------------------------
+
+git rebase --abort
+
+
+============================================================
+
+Q12. Safely undo a faulty committed test assertion while
+     preserving commit history.
+------------------------------------------------------------
+
+git revert <commit-id>
+
+Then push:
+
+git push
+
+Example:
+
+git revert a1b2c3d
+
+git push
+
+git revert creates a new commit that reverses the old commit.
+
+
+============================================================
+
+Q13. Undo the last commit while keeping all changes STAGED.
+------------------------------------------------------------
+
+git reset --soft HEAD~1
+
+Effect:
+
+The last commit is removed.
+The changes remain in the working directory.
+The changes remain staged.
+
+
+============================================================
+
+Q14. Remove db-config.env from Git tracking but keep it
+     on the local machine.
+------------------------------------------------------------
+
+git rm --cached src/main/resources/db-config.env
+
+Add it to .gitignore:
+
+echo "db-config.env" >> .gitignore
+
+Then:
+
+git add .gitignore
+
+git commit -m "Ignore database configuration"
+
+
+============================================================
+
+Q15. Temporarily save unfinished schedule.jsp changes.
+------------------------------------------------------------
+
+git stash
+
+Switch branch:
+
+git switch main
+
+After completing emergency work:
+
+git switch feature/player-registration
+
+
+============================================================
+
+Q16. List saved work snapshots and restore schedule.jsp.
+------------------------------------------------------------
+
+List stashes:
+
+git stash list
+
+Restore latest stash:
+
+git stash pop
+
+Alternative:
+
+git stash apply
+
+Difference:
+
+git stash pop
+= restore + remove stash
+
+git stash apply
+= restore but keep stash
+
+
+============================================================
+
+Q17. Compare index.jsp between feature branch and main.
+------------------------------------------------------------
+
+git diff main...feature/player-registration -- src/main/webapp/index.jsp
+
+
+============================================================
+
+Q18. Display a compact visual branch/merge timeline.
+------------------------------------------------------------
+
+git log --oneline --graph --decorate --all
+
+
+============================================================
+
+Q19. Merge feature/player-registration into main.
+------------------------------------------------------------
+
+git switch main
+
+git merge feature/player-registration
+
+
+If successful, push:
+
+git push origin main
+
+
+============================================================
+
+Q20. Push main and verify local/remote are synchronized.
+------------------------------------------------------------
+
+git switch main
+
+git push origin main
+
+git fetch origin
+
+git status
+
+You can also verify the latest history:
+
+git log --oneline --decorate -5
+
+
+============================================================
+PART II — MAVEN JAVA APPLICATION DEVELOPMENT
+============================================================
+
+
+Q1. POM VALIDATION & PLUGIN DEBUGGING
+------------------------------------------------------------
+
+1. Correct malformed dependency.
+
+Wrong:
+
+<artificatId>sports-analytics</artificatId>
+
+Correct:
+
+<artifactId>sports-analytics</artifactId>
+
+
+Example Servlet dependency:
+
+<dependency>
+    <groupId>javax.servlet</groupId>
+    <artifactId>javax.servlet-api</artifactId>
+    <version>4.0.1</version>
+    <scope>provided</scope>
+</dependency>
+
+
+Validate the POM:
+
+mvn validate
+
+
+For detailed debugging:
+
+mvn -X validate
+
+
+------------------------------------------------------------
+2. Correct Tomcat Maven plugin.
+------------------------------------------------------------
+
+The missing element is:
+
+<groupId>org.apache.tomcat.maven</groupId>
+
+
+Complete plugin:
+
+<plugin>
+    <groupId>org.apache.tomcat.maven</groupId>
+    <artifactId>tomcat7-maven-plugin</artifactId>
+    <version>2.2</version>
+</plugin>
+
+
+The important plugin coordinates are:
+
+groupId:
+org.apache.tomcat.maven
+
+artifactId:
+tomcat7-maven-plugin
+
+version:
+2.2
+
+
+============================================================
+
+Q2. DEPENDENCY RESOLUTION & LIFECYCLE FAILURES
+============================================================
+
+
+1. Correct MySQL dependency.
+------------------------------------------------------------
+
+<dependency>
+    <groupId>com.mysql</groupId>
+    <artifactId>mysql-connector-j</artifactId>
+    <version>8.0.33</version>
+</dependency>
+
+
+Then rebuild:
+
+mvn clean package
+
+
+------------------------------------------------------------
+2. Correct incomplete dependency.
+------------------------------------------------------------
+
+A Maven dependency normally requires:
+
+<groupId>...</groupId>
+<artifactId>...</artifactId>
+<version>...</version>
+
+
+Example JUnit dependency:
+
+<dependency>
+    <groupId>junit</groupId>
+    <artifactId>junit</artifactId>
+    <version>4.13.2</version>
+    <scope>test</scope>
+</dependency>
+
+
+============================================================
+
+Q3. BUILD OUTPUT ANALYSIS
+============================================================
+
+
+1. Exact generated WAR filename.
+------------------------------------------------------------
+
+If the POM contains:
+
+<artifactId>SportsTournamentManagementSystem</artifactId>
+
+<version>0.0.1-SNAPSHOT</version>
+
+<packaging>war</packaging>
+
+
+and:
+
+<finalName>StudentCourseManagementSystem</finalName>
+
+
+then Maven generates:
+
+target/StudentCourseManagementSystem.war
+
+
+General rule WITHOUT finalName:
+
+artifactId-version.war
+
+
+Example:
+
+SportsTournamentManagementSystem-0.0.1-SNAPSHOT.war
+
+
+WITH finalName:
+
+<finalName>XYZ</finalName>
+
+generates:
+
+target/XYZ.war
+
+
+------------------------------------------------------------
+2. Context path.
+------------------------------------------------------------
+
+If the deployed WAR is:
+
+StudentCourseManagementSystem.war
+
+the normal context path is:
+
+/StudentCourseManagementSystem
+
+
+URL:
+
+http://localhost:8080/StudentCourseManagementSystem
+
+
+If the Tomcat plugin configuration specifies a different
+context path, use the configured path.
+
+
+============================================================
+
+Q4. MAVEN CORE CONCEPTS
+============================================================
+
+
+1. pluginManagement vs plugins.
+------------------------------------------------------------
+
+pluginManagement:
+
+<pluginManagement>
+    <plugins>
+        ...
+    </plugins>
+</pluginManagement>
+
+
+It provides plugin configuration/defaults.
+
+It does NOT normally activate the plugin by itself.
+
+
+plugins:
+
+<plugins>
+    <plugin>
+        ...
+    </plugin>
+</plugins>
+
+
+This declares the plugin for use in the current build.
+
+
+MEMORY:
+
+pluginManagement = configuration/defaults
+
+plugins = active plugin
+
+
+------------------------------------------------------------
+2. SNAPSHOT.
+------------------------------------------------------------
+
+Example:
+
+<version>0.0.1-SNAPSHOT</version>
+
+
+SNAPSHOT means the version is a development/unreleased
+version.
+
+It can change during development.
+
+Release:
+
+1.0.0
+
+is intended to be a stable release.
+
+
+============================================================
+
+Q5. ENVIRONMENT INSPECTION & DEBUGGING
+============================================================
+
+
+1. Check JDK version used by Maven.
+------------------------------------------------------------
+
+mvn -version
+
+
+This displays:
+
+- Maven version
+- Java version
+- Java home
+- OS information
+
+
+------------------------------------------------------------
+2. Clean, package and show full debug output.
+------------------------------------------------------------
+
+mvn clean package -X
+
+
+-X enables detailed Maven debug output.
+
+
+============================================================
+
+Q6. LOCAL MAVEN REPOSITORY & CUSTOM LIBRARIES
+============================================================
+
+
+1. Install sports-analytics.jar into local Maven repository.
+------------------------------------------------------------
+
+Coordinates:
+
+groupId:
+com.sports
+
+artifactId:
+sports-analytics
+
+version:
+1.0.0
+
+
+Command:
+
+mvn install:install-file -Dfile=sports-analytics.jar -DgroupId=com.sports -DartifactId=sports-analytics -Dversion=1.0.0 -Dpackaging=jar
+
+
+Maven stores it under:
+
+~/.m2/repository
+
+
+Windows:
+
+%USERPROFILE%\.m2\repository
+
+
+------------------------------------------------------------
+2. Display dependency tree.
+------------------------------------------------------------
+
+mvn dependency:tree
+
+
+This displays:
+
+- Direct dependencies
+- Transitive dependencies
+- Dependency versions
+- Dependency relationships
+
+
+============================================================
+
+Q7. TEST EXECUTION CONTROLS
+============================================================
+
+
+1. Maven test output locations.
+------------------------------------------------------------
+
+Compiled test classes:
+
+target/test-classes/
+
+
+JUnit/Surefire reports:
+
+target/surefire-reports/
+
+
+------------------------------------------------------------
+2. Run ONLY TournamentBracketTest.
+------------------------------------------------------------
+
+mvn -Dtest=TournamentBracketTest test
+
+
+------------------------------------------------------------
+3. Skip test execution during packaging.
+------------------------------------------------------------
+
+mvn package -DskipTests
+
+
+IMPORTANT:
+
+-DskipTests
+= skips test execution
+
+-Dmaven.test.skip=true
+= skips test compilation AND execution
+
+
+============================================================
+
+Q8. DEPENDENCY ANALYSIS & SCOPE
+============================================================
+
+
+1. Detect unused dependencies.
+------------------------------------------------------------
+
+mvn dependency:analyze
+
+
+------------------------------------------------------------
+2. Why is Servlet API scope provided?
+------------------------------------------------------------
+
+Example:
+
+<dependency>
+    <groupId>javax.servlet</groupId>
+    <artifactId>javax.servlet-api</artifactId>
+    <version>4.0.1</version>
+    <scope>provided</scope>
+</dependency>
+
+
+The Servlet API is needed during compilation.
+
+Tomcat supplies the Servlet API at runtime.
+
+Therefore:
+
+provided
+= compile available, runtime supplied by container.
+
+
+This avoids packaging the Servlet API unnecessarily
+inside the application WAR.
+
+If an incompatible Servlet API is packaged inside the WAR,
+classloading/version conflicts may occur.
+
+
+============================================================
+PART III — DOCKERIZATION
+============================================================
+
+
+Q1. Download project, enter directory and verify files.
+------------------------------------------------------------
+
+git clone https://github.com/sarasrija/SportManagementSystem.git
+
+cd SportManagementSystem
+
+ls
+
+Verify pom.xml:
+
+ls pom.xml
+
+
+Expected:
+
+pom.xml
+src/
+
+
+============================================================
+
+Q2. Dockerfile for Sports Management System.
+------------------------------------------------------------
+
+The question specifically requires:
+
+Base image:
+openjdk:17-jdk-slim
+
+Working directory:
+/app
+
+JAR:
+target/sports-management.jar
+
+
+Dockerfile:
+
+FROM openjdk:17-jdk-slim
+
+WORKDIR /app
+
+COPY target/sports-management.jar app.jar
+
+EXPOSE 8080
+
+CMD ["java", "-jar", "app.jar"]
+
+
+============================================================
+
+Q3. Build custom Docker image.
+------------------------------------------------------------
+
+docker build -t sportsapp-image .
+
+
+Verify:
+
+docker images
+
+
+Expected image:
+
+sportsapp-image
+
+
+============================================================
+
+Q4. Run sports-app-container in background.
+------------------------------------------------------------
+
+docker run -d --name sports-app-container -p 8080:8080 sportsapp-image
+
+
+Meaning:
+
+HOST PORT 8080
+        ↓
+CONTAINER PORT 8080
+
+
+============================================================
+
+Q5. Display running containers.
+------------------------------------------------------------
+
+docker ps
+
+
+============================================================
+
+Q6. Display all containers including stopped ones.
+------------------------------------------------------------
+
+docker ps -a
+
+
+============================================================
+
+Q7. Enter running sports-app-container.
+------------------------------------------------------------
+
+docker exec -it sports-app-container bash
+
+
+If bash is unavailable:
+
+docker exec -it sports-app-container sh
+
+
+============================================================
+
+Q8. Stop and restart the container.
+------------------------------------------------------------
+
+Stop:
+
+docker stop sports-app-container
+
+Start:
+
+docker start sports-app-container
+
+
+OR:
+
+docker restart sports-app-container
+
+
+============================================================
+
+Q9. Save container state as Docker image.
+------------------------------------------------------------
+
+Given container ID:
+
+0e993d2009a1
+
+
+Command:
+
+docker commit 0e993d2009a1 yourusername/sportsapp:v1
+
+
+Verify:
+
+docker images
+
+
+============================================================
+
+Q10. Authenticate with Docker Hub.
+------------------------------------------------------------
+
+docker login
+
+
+Enter Docker Hub username and password/token.
+
+
+============================================================
+
+Q11. Push image to Docker Hub.
+------------------------------------------------------------
+
+docker push yourusername/sportsapp:v1
+
+
+============================================================
+
+Q12. Logout and remove stored authentication credentials.
+------------------------------------------------------------
+
+docker logout
+
+
+============================================================
+IMPORTANT SPORTS MANAGEMENT POM TEMPLATE
+============================================================
+
+If the question asks you to correct the Sports Management
+System POM, use the project requirements given in the paper.
+
+Basic structure:
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>SELABINTERNAL1</groupId>
+
+    <artifactId>SportsTournamentManagementSystem</artifactId>
+
+    <version>0.0.1-SNAPSHOT</version>
+
+    <packaging>war</packaging>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>8.0.33</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sports</groupId>
+            <artifactId>sports-analytics</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+
+        <finalName>StudentCourseManagementSystem</finalName>
+
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+            </plugin>
+
+        </plugins>
+
+    </build>
+
+</project>
+
+
+============================================================
+MAVEN COMMANDS — SPORTS SET
+============================================================
+
+Check Java:
+
+java -version
+
+Check compiler:
+
+javac -version
+
+Check Maven + Java used by Maven:
+
+mvn -version
+
+Validate POM:
+
+mvn validate
+
+Compile:
+
+mvn compile
+
+Run tests:
+
+mvn test
+
+Clean:
+
+mvn clean
+
+Package:
+
+mvn package
+
+Clean + package:
+
+mvn clean package
+
+Clean + package + debug:
+
+mvn clean package -X
+
+Install:
+
+mvn install
+
+Dependency tree:
+
+mvn dependency:tree
+
+Dependency analysis:
+
+mvn dependency:analyze
+
+Run one test:
+
+mvn -Dtest=TournamentBracketTest test
+
+Skip tests:
+
+mvn package -DskipTests
+
+
+============================================================
+CUSTOM JAR — SPORTS-ANALYTICS
+============================================================
+
+mvn install:install-file -Dfile=sports-analytics.jar -DgroupId=com.sports -DartifactId=sports-analytics -Dversion=1.0.0 -Dpackaging=jar
+
+
+============================================================
+GIT COMMANDS — SPORTS SET
+============================================================
+
+git clone https://github.com/sarasrija/SportManagementSystem.git
+
+cd SportManagementSystem
+
+git remote -v
+
+git status
+
+git diff
+
+git switch -c feature/player-registration
+
+git branch
+
+git branch -a
+
+git branch --show-current
+
+git add <file>
+
+git commit -m "message"
+
+git commit --amend --no-edit
+
+git fetch origin
+
+git merge origin/main
+
+git rebase origin/main
+
+git rebase --continue
+
+git rebase --abort
+
+git revert <commit-id>
+
+git reset --soft HEAD~1
+
+git rm --cached <file>
+
+git stash
+
+git stash list
+
+git stash pop
+
+git stash apply
+
+git diff main...feature/player-registration -- src/main/webapp/index.jsp
+
+git log --oneline --graph --decorate --all
+
+git switch main
+
+git merge feature/player-registration
+
+git push origin main
+
+
+============================================================
+DOCKER COMMANDS — SPORTS SET
+============================================================
+
+docker build -t sportsapp-image .
+
+docker images
+
+docker run -d --name sports-app-container -p 8080:8080 sportsapp-image
+
+docker ps
+
+docker ps -a
+
+docker exec -it sports-app-container bash
+
+docker stop sports-app-container
+
+docker start sports-app-container
+
+docker restart sports-app-container
+
+docker commit 0e993d2009a1 yourusername/sportsapp:v1
+
+docker login
+
+docker push yourusername/sportsapp:v1
+
+docker logout
+
+
+============================================================
+IMPORTANT GIT DIFFERENCES
+============================================================
+
+git diff
+    Shows unstaged changes.
+
+git diff --cached
+    Shows staged changes.
+
+git status
+    Shows staged + unstaged + untracked files.
+
+git restore file
+    Discards uncommitted changes to file.
+
+git restore --staged file
+    Unstages file but keeps modifications.
+
+git reset --soft HEAD~1
+    Removes last commit but keeps changes staged.
+
+git revert <commit>
+    Creates a new commit undoing an old commit.
+    Preferred for already-pushed/shared commits.
+
+git fetch
+    Downloads remote information without integrating it.
+
+git pull
+    Fetch + integrate remote changes.
+
+git stash
+    Temporarily saves uncommitted work.
+
+git stash pop
+    Restores and removes latest stash.
+
+git merge
+    Combines branch histories.
+
+git rebase
+    Replays feature commits on top of another branch.
+
+git rebase --abort
+    Cancels rebase.
+
+git merge --abort
+    Cancels merge.
+
+
+============================================================
+IMPORTANT MAVEN DIFFERENCES
+============================================================
+
+mvn clean
+    Deletes target/.
+
+mvn compile
+    Compiles main source.
+
+mvn test
+    Runs unit tests.
+
+mvn package
+    Creates JAR/WAR.
+
+mvn install
+    Installs artifact into local .m2 repository.
+
+mvn validate
+    Checks Maven project/POM validity.
+
+mvn dependency:tree
+    Displays dependencies.
+
+mvn dependency:analyze
+    Analyzes dependency usage.
+
+mvn clean package -X
+    Clean + build + detailed debug output.
+
+mvn package -DskipTests
+    Builds without executing tests.
+
+
+============================================================
+IMPORTANT DOCKER DIFFERENCES
+============================================================
+
+docker images
+    Lists images.
+
+docker ps
+    Lists running containers.
+
+docker ps -a
+    Lists ALL containers.
+
+docker logs <container>
+    Displays container/application output.
+
+docker exec -it <container> bash
+    Opens shell inside running container.
+
+docker inspect <container>
+    Shows detailed container configuration/state.
+
+docker stop <container>
+    Stops container.
+
+docker start <container>
+    Starts stopped container.
+
+docker restart <container>
+    Restarts container.
+
+docker rm <container>
+    Removes container.
+
+docker rm -f <container>
+    Force stops and removes container.
+
+docker pull <image>
+    Downloads image.
+
+docker build -t image:tag .
+    Builds image.
+
+docker tag image username/repo:tag
+    Creates Docker Hub tag.
+
+docker push username/repo:tag
+    Uploads image.
+
+docker login
+    Login to Docker Hub.
+
+docker logout
+    Logout.
+
+
+============================================================
+MOST IMPORTANT EXAM TRAPS
+============================================================
+
+1. git restore file
+
+   DISCARDS uncommitted changes.
+
+
+2. git restore --staged file
+
+   ONLY removes file from staging.
+   Changes are NOT deleted.
+
+
+3. git reset --soft HEAD~1
+
+   Removes last commit.
+   Keeps changes staged.
+
+
+4. git revert <commit>
+
+   Safely reverses an already-pushed commit.
+   Creates a new commit.
+
+
+5. git fetch origin
+
+   Downloads remote updates.
+   Does not merge them.
+
+
+6. git pull
+
+   Fetches and integrates remote changes.
+
+
+7. git rebase origin/main
+
+   Moves/replays feature branch commits on latest main.
+
+
+8. git rebase --abort
+
+   Cancels a rebase.
+
+
+9. git merge --abort
+
+   Cancels a merge.
+
+
+10. git rm --cached file
+
+    Stops tracking file but keeps local copy.
+
+
+11. .gitignore
+
+    Prevents matching UNTRACKED files from being added.
+
+
+12. Docker port syntax:
+
+    -p HOST:CONTAINER
+
+
+13. Example:
+
+    -p 8080:8080
+
+    means:
+
+    HOST 8080 → CONTAINER 8080
+
+
+14. Sports application Dockerfile requires:
+
+    FROM openjdk:17-jdk-slim
+
+    WORKDIR /app
+
+    COPY target/sports-management.jar app.jar
+
+    EXPOSE 8080
+
+    CMD ["java", "-jar", "app.jar"]
+
+
+15. Docker Hub image format:
+
+    username/repository:tag
+
+
+Example:
+
+    yourusername/sportsapp:v1
+
+
+============================================================
+END — SPORTS MANAGEMENT SYSTEM COMPLETE ANSWERS
+============================================================
