@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>SELABINTERNAL1</groupId>
+  <artifactId>SportsTournamentManagementSystem</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
+
+  <name>StudentCourseManagementSystem Maven Webapp</name>
+  <url>http://www.example.com</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>8</maven.compiler.source>
+    <maven.compiler.target>8</maven.compiler.target>
+  </properties>
+
+  <dependencies>
+    <!-- Dependency Block A: Core Web Application API -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artificatId>javax.servlet-api</artificatId>
+      <version>4.0.1</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- Dependency Block B: Database Connectivity -->
+    <dependency>
+      <groupId>mysql-db</groupId>
+      <artifactId>mysql-connector</artifactId>
+      <version>8.0.33</version>
+    </dependency>
+
+    <!-- Dependency Block C: Unit Testing -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Dependency Block D: Offline Vendor Library -->
+    <dependency>
+      <groupId>com.sports</groupId>
+      <artifactId>sports-analytics</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <!-- Notice the name provided here -->
+    <finalName>StudentCourseManagementSystem</finalName>
+    
+    <pluginManagement>
+      <plugins>
+        <!-- Standard Maven Plugins... -->
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.13.0</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>3.4.0</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+      <!-- Plugin Block E: Embedded Tomcat Server -->
+      <plugin>
+        <artifactId>tomcat7-maven-plugin</artifactId>
+        <version>2.2</version>
+        <configuration>
+          <port>8080</port>
+          <path>/SportsTournament</path>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
